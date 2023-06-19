@@ -145,7 +145,6 @@ show_info() {
 	echo " _______________________________ "
 	echo "|   Install APK from AAB File   |"
 	echo "|             v_1.0.0           |"
-	echo "|        dungvt31@fpt.com       |"
 	echo "|_______________________________|"
 	
 
