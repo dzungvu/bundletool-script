@@ -10,27 +10,24 @@ show_help() {
 	
 # Function main()
 main() {
-	# Get a list of connected devices
-	device_list=$(adb devices | grep -v List | grep -v -e '^[[:space:]]*$' | cut -f 1)
-
-	# Get the size of the device_list
-	device_count=$(echo "$device_list" | wc -l)
-	if [ -z "$device_list" ]
-	then 
-		echo "No device was found, make sure you have connected your devices!"
-		echo "If there was an error, try the bellow instruction:"
-		echo "adb kill-server > hit enter"
-		echo "adb start-server > hit enter"
-		exit 0
-	else
-		echo "$device_count device(s) were found, continue processing"
-	fi
-
-
 	read -p "Please enter path to aab/apks file: " origin_file_path
 	# Trim and remove single quote characters
 	file_path=$(echo "$origin_file_path" | xargs | sed "s/'//g")
+	if [[ "$file_path" == *.aab* ]]
+	then
+		processAabFile "$file_path"
+	else
+		if [[ "$file_path" == *.apks* ]]
+		then
+			processApksFile "$file_path"
+		else
+			echo "Can not recognize file extension. Make sure your input file ended with .aab or apks"
+		fi
+	fi
+}
 
+processAabFile() {
+	file_path=$1
 	echo "file path = $file_path"
 
 	# Extract the directory path and base name of the file
@@ -55,7 +52,29 @@ main() {
 			
 
 	java -jar bundletool-all-1.15.1.jar build-apks --bundle="$file_path" --output="$new_file_path"
+	
+	processApksFile "$new_file_path"
+}
 
+
+processApksFile() {
+	new_file_path=$1
+	# Get a list of connected devices
+	device_list=$(adb devices | grep -v List | grep -v -e '^[[:space:]]*$' | cut -f 1)
+
+	# Get the size of the device_list
+	device_count=$(echo "$device_list" | wc -l)
+	if [ -z "$device_list" ]
+	then 
+		echo "No device was found, make sure you have connected your devices!"
+		echo "If there was an error, try the bellow instruction:"
+		echo "adb kill-server > hit enter"
+		echo "adb start-server > hit enter"
+		exit 0
+	else
+		echo "$device_count device(s) were found, continue processing"
+	fi
+	
 	if [ $device_count -gt 1 ]
 	then
 		echo "There are more than one connected devices."
@@ -97,15 +116,6 @@ main() {
 	echo "End process"
 	read -p "Press any key to exit" key
 	exit 0
-}
-
-processAabFile() {
-
-}
-
-
-processApksFile() {
-
 }
 
 show_info() {
