@@ -8,6 +8,13 @@ NC='\033[0m' # No color
 
 auto=0
 
+# Set Java environment
+export JAVA_HOME="$(pwd)/jdk-17.0.7"
+export PATH="$PATH:$JAVA_HOME/bin:$(pwd)/platform-tools"
+echo %$JAVA_HOME%
+
+java -version
+
 # Function to display script usage
 show_help() {
   echo -e "${GREEN}Usage: scriptname [options]${NC}"
