@@ -9,9 +9,16 @@ NC='\033[0m' # No color
 auto=0
 
 # Set Java environment
-export JAVA_HOME="$(pwd)/jdk-17.0.7"
-export PATH="$PATH:$JAVA_HOME/bin:$(pwd)/platform-tools"
-echo %$JAVA_HOME%
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  export JAVA_HOME="$(pwd)/jdk-17.0.7.jdk"
+  export PATH="$PATH:$JAVA_HOME/bin:$(pwd)/platform-tools"
+  echo %$JAVA_HOME%
+else
+  export JAVA_HOME="$(pwd)/jdk-17.0.7"
+  export PATH="$PATH:$JAVA_HOME/bin:$(pwd)/platform-tools"
+  echo %$JAVA_HOME%
+fi
+
 
 java -version
 
