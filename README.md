@@ -3,6 +3,17 @@
 Build application to connected-devices by using bundletool.
 Current version of bundletool: 1.15.1
 
+## Before you use
+Checkout the ```installation``` branch to get [installation.sh](https://github.com/dzungvu/bundletool-script/tree/installation) file. Then run the file to setup tool atomatically
+
+Or run the manual setup
+
+## Manual setup
+- Checkout for the compatible branch (```linux```/```mac-arm```/```mac-x86_64/windows```)
+- Unzip the modules and naming the extracted-file as ```modules``` in the same directory with ```modules.zip``` file:
+  - mac: ```bundletool-script/jdk-17.0.7.jdk/Contents/Home/lib/modules.zip```
+  - linux/windows: ```bundletool-script/jdk-17.0.7/lib/modules.zip```
+
 ## How it work
 - Run the ```genApks.sh``` file
 - If there was ```permission deined``` error, run ```chmod +x genApks.sh``` to allow this file run as a program
